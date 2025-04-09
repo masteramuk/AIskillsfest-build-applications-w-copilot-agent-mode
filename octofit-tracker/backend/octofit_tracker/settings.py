@@ -14,7 +14,16 @@ INSTALLED_APPS = [
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'djongo',  # Use djongo engine for MongoDB
+        'NAME': os.getenv('MONGODB_NAME', 'default_db_name'),  # Replace with your MongoDB database name
+        'ENFORCE_SCHEMA': False,  # Optional: Set to True if you want to enforce schema
+        'CLIENT': {
+            'host': os.getenv('MONGODB_HOST', 'localhost'),  # Replace with your MongoDB host
+            'port': int(os.getenv('MONGODB_PORT', 27017)),  # Replace with your MongoDB port
+            'username': os.getenv('MONGODB_USERNAME', 'default_username'),  # Replace with your MongoDB username
+            'password': os.getenv('MONGODB_PASSWORD', 'default_password'),  # Replace with your MongoDB password
+            'authSource': os.getenv('MONGODB_AUTH_SOURCE', 'admin'),  # Replace with your MongoDB auth source
+            'authMechanism': os.getenv('MONGODB_AUTH_MECHANISM', 'SCRAM-SHA-1'),  # Replace with your MongoDB auth mechanism
+        }
     }
 }
